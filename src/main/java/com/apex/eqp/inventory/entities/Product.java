@@ -35,4 +35,10 @@ public class Product {
     public int hashCode() {
         return getClass().hashCode();
     }
+    
+    @Override
+    public String toString() {
+        return "Product{id=" + id + ", name='" + name + ")";
+    }
+    
 }

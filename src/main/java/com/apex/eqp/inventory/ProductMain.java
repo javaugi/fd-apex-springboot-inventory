@@ -1,41 +1,36 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.apex.eqp.inventory;
 
 import com.apex.eqp.inventory.entities.Product;
 import com.apex.eqp.inventory.repositories.ProductRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@SpringBootApplication
-@EnableJpaRepositories
-public class InventoryApplication {
+/**
+ *
+ * @author javaugi
+ */
+public class ProductMain {
+
     @Autowired
     private ProductRepository productRepository;
-
-    public static void main(String[] args) {
-        SpringApplication.run(InventoryApplication.class, args);
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
-            }
-        };
-    }
     
+    public static void main(String[] args) {
+        try{
+            ProductMain m = new ProductMain();
+            m.run(args);
+        }catch(Exception e) {
+        }
+    }
+
     public void run(String... args) throws Exception {
 
         Product fanta = createTestProduct("Fanta", 1.2, 10);
@@ -99,5 +94,5 @@ public class InventoryApplication {
                 .price(price)
                 .quantity(quantity)
                 .build();
-    }    
+    }
 }

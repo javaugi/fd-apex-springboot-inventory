@@ -11,7 +11,7 @@
     <groupId>com.apex.eqp</groupId>
     <artifactId>Inventory</artifactId>
     <version>0.0.2-SNAPSHOT</version>
-    <name>fd-inventory</name>
+    <name>fd-spring-boot--inventory</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
