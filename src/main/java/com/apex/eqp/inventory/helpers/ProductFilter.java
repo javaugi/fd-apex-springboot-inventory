@@ -17,18 +17,20 @@ public class ProductFilter {
 
     public List<Product> removeRecalledFrom(Collection<Product> allProduct) {
         //return allProduct.stream().filter(ProductFilter::filterByName).collect(Collectors.toList());
-        return allProduct.stream()
-            .filter(product -> (recalledProducts != null) && !recalledProducts.contains(product.getName()))
-            .collect(Collectors.toList());
+        return allProduct.stream().filter(this::filterByNameNew).collect(Collectors.toList());
     }
 
-    private static boolean filterByName(Product product) {
+    public List<Product> doRemoveRecalledFrom(Collection<Product> allProduct) {
+        return allProduct.stream()
+                .filter(prod -> filterByNameNew(prod))
+                .collect(Collectors.toList());
+    }
+
+    public static boolean filterByName(Product product) {
         return true;
     }
     
-
-    private static boolean filterByName(Set<String> recalledProducts, Product product) {
+    public boolean filterByNameNew(Product product) {
         return (recalledProducts != null) && !recalledProducts.contains(product.getName());
     }
-    
 }

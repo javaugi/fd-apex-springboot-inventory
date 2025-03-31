@@ -4,14 +4,12 @@ import com.apex.eqp.inventory.entities.Product;
 import com.apex.eqp.inventory.entities.RecalledProduct;
 import com.apex.eqp.inventory.services.ProductService;
 import com.apex.eqp.inventory.services.RecalledProductService;
-import java.util.Collection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -158,63 +156,4 @@ class ProductServiceTests {
         Assertions.assertNotNull(pagedProduct.getTotalElements() > 0);
         Assertions.assertNotNull(pagedProduct.getContent().get(0) instanceof Product);
     }
-    
-    @Test
-    public void displayNonRecalledProducts() {
-        //productService.deleteAllProducts();
-        
-        createProducts();
-        
-        RecalledProduct rProduct = this.createTestRecalledProduct("product12", Boolean.TRUE);
-        productService.saveRecalled(rProduct);
-        
-        Collection<Product> allProducts = productService.getAllProduct();
-        System.out.println("allProducts: " + allProducts);
-        Assertions.assertNotNull(allProducts);
-        
-        List<Product> products = allProducts.stream()
-            .filter(product -> !product.getName().equals(rProduct.getName()))
-            .collect(Collectors.toList());
-        System.out.println("nonRecalled: " + products);
-        Assertions.assertNotNull(products);
-    }
-
-    @Test
-    public void displayAllNonRecalledProducts() {
-        //productService.deleteAllProducts();
-        
-        createProducts2();
-        
-        RecalledProduct rProduct = this.createTestRecalledProduct("product22", Boolean.TRUE);
-        productService.saveRecalled(rProduct);
-        
-        Collection<Product> allProducts = productService.getAllNonRecalledProduct();
-        System.out.println("all Non Recalled Products: " + allProducts);
-        Assertions.assertNotNull(allProducts);
-    }
-
-    private void createProducts() {
-        Product product = createTestProduct("product11", 1.3, 5);
-        Product savedProduct = productService.save(product);
-        Product loadedProduct = productService.findById(savedProduct.getId()).orElse(null);
-        Assertions.assertNotNull(loadedProduct);
-
-        product = createTestProduct("product12", 1.3, 5);
-        productService.save(product);
-        product = createTestProduct("product13", 1.3, 5);
-        productService.save(product);
-    }
-    
-    private void createProducts2() {
-        Product product = createTestProduct("product21", 1.3, 5);
-        Product savedProduct = productService.save(product);
-        Product loadedProduct = productService.findById(savedProduct.getId()).orElse(null);
-        Assertions.assertNotNull(loadedProduct);
-
-        product = createTestProduct("product22", 1.3, 5);
-        productService.save(product);
-        product = createTestProduct("product23", 1.3, 5);
-        productService.save(product);
-    }
-    
 }

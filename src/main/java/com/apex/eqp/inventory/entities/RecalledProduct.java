@@ -35,4 +35,9 @@ public class RecalledProduct {
     public int hashCode() {
         return getClass().hashCode();
     }
+    
+    @Override
+    public String toString() {
+        return "RecalledProduct{id=" + id + ", name='" + name + ")";
+    }
 }

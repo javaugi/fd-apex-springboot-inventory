@@ -55,10 +55,29 @@ public class ProductService {
         List<String> nonRecalledProductNames = nonRecalled.stream()
                 .map(RecalledProduct::getName)
                 .collect(Collectors.toList());
+        System.out.println("getAllNonRecalledProduct size=" + nonRecalledProductNames.size());
+        
+        Collection<Product> allProducts = inventoryRepository.findAll();
+        System.out.println("getAllProduct size=" + allProducts.size());        
         
         ProductFilter filter = new ProductFilter(new HashSet(nonRecalledProductNames));
-        return filter.removeRecalledFrom(inventoryRepository.findAll());
+        return filter.removeRecalledFrom(allProducts);
     }
+
+    public Collection<Product> getAllNonRecalledProduct2() {
+        Collection<RecalledProduct> nonRecalled = recalledProductRepository.findAll();
+        List<String> nonRecalledProductNames = nonRecalled.stream()
+                .map(RecalledProduct::getName)
+                .collect(Collectors.toList());
+        System.out.println("getAllNonRecalledProduct=" + nonRecalledProductNames);
+        
+        Collection<Product> allProducts = inventoryRepository.findAll();
+        System.out.println("getAllProduct=" + allProducts);        
+        
+        ProductFilter filter = new ProductFilter(new HashSet(nonRecalledProductNames));
+        return filter.doRemoveRecalledFrom(allProducts);
+    }
+
 
     public Collection<Product> getAllProduct() {
         ProductFilter filter = new ProductFilter(null);
