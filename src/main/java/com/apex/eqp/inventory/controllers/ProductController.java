@@ -26,12 +26,10 @@ public class ProductController {
         return ResponseEntity.ok(productService.save(product));
     }
     
-    //*
     @PutMapping("/prodcuts/{id}")
     public Product updateProduct(@RequestBody Product product, @PathVariable("id") Integer productId) {
         return productService.updateProduct(product, productId);
     }
-    // */
 
     @GetMapping("/findProducts")
     public ResponseEntity<Collection<Product>> findProducts() {
