@@ -72,7 +72,8 @@ class NonRecalledProductServiceTest {
         System.out.println("1 filtered: " + filteredProducts.size());
         Assertions.assertNotNull(filteredProducts);
         Assertions.assertTrue((filteredProducts.size() == (allProducts.size() - 2)), "1 filtered nonrecalledProducts size=" + filteredProducts.size());
-                
+        
+        //test git push
         ProductFilter filter = new ProductFilter(names);
         filteredProducts = filter.removeRecalledFrom(allProducts);
         System.out.println("2 filtered: " + filteredProducts.size());
