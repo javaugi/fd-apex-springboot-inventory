@@ -5,6 +5,7 @@ import com.apex.eqp.inventory.entities.RecalledProduct;
 import com.apex.eqp.inventory.helpers.ProductFilter;
 import com.apex.eqp.inventory.services.ProductService;
 import com.apex.eqp.inventory.services.RecalledProductService;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -58,33 +59,33 @@ class NonRecalledProductServiceTest {
         System.out.println("recalledProduct names: " + names);
         
         Collection<Product> allProducts = productService.getAllUnfilteredProduct();
-        System.out.println("allProducts: " + allProducts.size());
+        System.out.println("allProducts: " + allProducts);
         Assertions.assertNotNull(allProducts);
         
         Collection<RecalledProduct> recalledProducts = recalledProductService.getAllRecalledProducts();
-        System.out.println("recalledProducts: " + recalledProducts.size());
+        System.out.println("recalledProducts: " + recalledProducts);
         Assertions.assertNotNull(recalledProducts);
         
-        List<Product> products = allProducts.stream()
+        List<Product> filteredProducts = allProducts.stream()
             .filter(product -> !names.contains(product.getName()))
             .collect(Collectors.toList());
-        System.out.println("1 filtered: " + products.size());
-        Assertions.assertNotNull(products);
-        Assertions.assertTrue((products.size() == (allProducts.size() - 2)), "1 filtered nonrecalledProducts size=" + products.size());
+        System.out.println("1 filtered: " + filteredProducts.size());
+        Assertions.assertNotNull(filteredProducts);
+        Assertions.assertTrue((filteredProducts.size() == (allProducts.size() - 2)), "1 filtered nonrecalledProducts size=" + filteredProducts.size());
         
         
         ProductFilter filter = new ProductFilter(names);
-        List<Product> filteredProducts = filter.removeRecalledFrom(allProducts);
+        filteredProducts = filter.removeRecalledFrom(allProducts);
         System.out.println("2 filtered: " + filteredProducts.size());
-        Assertions.assertTrue((filteredProducts.size() > 0), "2 filteredProducts size=" + filteredProducts.size());
+        Assertions.assertTrue((filteredProducts.size() == (allProducts.size() - 2)), "2 filteredProducts size=" + filteredProducts.size());
         
-        Collection<Product> nonrecalledProducts = productService.getAllNonRecalledProduct();
-        System.out.println("3 filtered: " + nonrecalledProducts.size());
-        Assertions.assertTrue((nonrecalledProducts.size() > 0), "3 filtered nonrecalledProducts size=" + nonrecalledProducts.size());
+        filteredProducts = new ArrayList(productService.getAllNonRecalledProduct());
+        System.out.println("3 filtered: " + filteredProducts.size());
+        Assertions.assertTrue((filteredProducts.size() == (allProducts.size() - 2)), "3 filteredProducts size=" + filteredProducts.size());
         
-        nonrecalledProducts = productService.getAllNonRecalledProduct2();
-        System.out.println("4 filtered: " + nonrecalledProducts.size());
-        Assertions.assertTrue((nonrecalledProducts.size() > 0), "4 filtered nonrecalledProducts size=" + nonrecalledProducts.size());
+        filteredProducts = new ArrayList(productService.getAllNonRecalledProduct2());
+        System.out.println("4 filtered: " + filteredProducts.size());
+        Assertions.assertTrue((filteredProducts.size() == (allProducts.size() - 2)), "4 filteredProducts size=" + filteredProducts.size());
     }
 
     private void createProducts() {
